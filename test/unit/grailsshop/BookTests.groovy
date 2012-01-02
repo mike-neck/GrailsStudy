@@ -99,11 +99,12 @@ class BookTests {
 
     @Test
     void validateReleaseDate() {
-        def book = new Book()
-        
-        book.releaseDate = null
+        mockForConstraintsTests(Book, [existingBook()])
         def object = 'releaseDate'
-        assert book.validate([object]) == true
+
+        def book = new Book()
+        assert book.validate() == false
+        assert book.errors[object] == null
     }
 
     @Test
