@@ -35,10 +35,11 @@ class PublisherTests {
     @Test
     void persistence() {
         assert Publisher.count() == 0
-        assert Book.getCount() == 0
+        assert Book.count() == 0
 
         def publisher = new Publisher(name: '翔泳社')
         def book = new Book(
+                publisher: publisher,
                 title: 'Grails 入門',
                 author: 'mike_neck',
                 price: 2000,
@@ -50,10 +51,13 @@ class PublisherTests {
         publisher.addToBooks(book).save()
 
         assert Publisher.count() == 1
+        assert Book.count() == 1
 
         publisher.delete()
+        book.delete()
 
         assert Publisher.count() == 0
+        assert Book.count() == 0
     }
 
     def existingPublisher = {
