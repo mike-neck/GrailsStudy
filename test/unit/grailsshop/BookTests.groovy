@@ -109,26 +109,36 @@ class BookTests {
 
     @Test
     void validateIsbn13() {
-        def book = new Book()
-        
-        book.isbn13 = null
+        mockForConstraintsTests(Book, [existingBook()])
         def object = 'isbn13'
-        assert book.validate([object]) == false
 
-        book.isbn13 = ''
-        assert book.validate([object]) == false
+        def book = new Book()
+        assert book.validate() == false
+        assert book.errors[object] == 'nullable'
 
-        book.isbn13 = '1234567890123'
-        assert book.validate([object]) == true
+        book = new Book(isbn13: '')
+        assert book.validate() == false
+        assert book.errors[object] == 'blank'
 
-        book.isbn13 = createTextToTheSize(13)
-        assert book.validate([object]) == false
+        book = new Book(isbn13: '1234567890123')
+        assert book.validate() == false
+        assert book.errors[object] == 'unique'
 
-        book.isbn13 = '123456789012'
-        assert book.validate([object]) == false
+        book = new Book(isbn13: createTextToTheSize(13))
+        assert book.validate() == false
+        assert book.errors[object] == 'matches'
 
-        book.isbn13 = '12345678901234'
-        assert book.validate([object]) == false
+        book = new Book(isbn13: '123456789012')
+        assert book.validate() == false
+        assert book.errors[object] == 'matches'
+
+        book = new Book(isbn13: '12345678901234')
+        assert book.validate() == false
+        assert book.errors[object] == 'matches'
+
+        book = new Book(isbn13: '9876543210123')
+        assert book.validate() == false
+        assert book.errors[object] == null
     }
 
     @Test

@@ -50,7 +50,7 @@ class Book {
         author(blank: false, maxSize: 255)
         price(min: 0)
         releaseDate(nullable: true)
-        isbn13(blank: false, matches: "\\p{Digit}{13}")
+        isbn13(blank: false, matches: "\\p{Digit}{13}", unique: true)
     }
 
     static mapping = {
