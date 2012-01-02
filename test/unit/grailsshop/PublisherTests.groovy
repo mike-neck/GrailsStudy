@@ -12,19 +12,21 @@ import org.junit.*
 @Mock([Publisher, Book])
 class PublisherTests {
 
-    void testValidation() {
+    @Test
+    void validateName() {
+        mockForConstraintsTests(Publisher, existingPublisher())
+        def object = 'name'
+
         def publisher = new Publisher()
-        def objects = []
-        objects << 'name'
+        assert publisher.validate() == false
+        assert publisher.errors[object] == 'nullable'
 
-        publisher.name = null
-        assert publisher.validate(objects) == false
+        publisher = new Publisher(name: '')
+        assert publisher.validate() == false
+        assert publisher.errors[object] == 'blank'
 
-        publisher.name = ''
-        assert publisher.validate(objects) == false
-
-        publisher.name = 'オライリー'
-        assert publisher.validate(objects) == true
+        publisher = new Publisher(name: 'オライリー')
+        assert publisher.validate() == true
     }
 
     @Test
@@ -49,6 +51,10 @@ class PublisherTests {
         publisher.delete()
 
         assert Publisher.count() == 0
+    }
+
+    def existingPublisher = {
+        [new Publisher(name: '岩波書店')]
     }
 
     Date createReleaseDate(int year, int month, int date) {
