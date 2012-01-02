@@ -25,6 +25,9 @@ class PublisherTests {
         assert publisher.validate() == false
         assert publisher.errors[object] == 'blank'
 
+        publisher = new Publisher(name: '岩波書店')
+        assert publisher.validate() == false
+
         publisher = new Publisher(name: 'オライリー')
         assert publisher.validate() == true
     }
