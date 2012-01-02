@@ -22,6 +22,22 @@ class BookTests {
         )
     }
 
+    @Test
+    void useMockForConstraint() {
+        def existingBook = new Book(
+                title: 'test title',
+                author: 'mike',
+                price: 200,
+                releaseDate: new Date(),
+                isbn13: '1234567890123',
+                description: 'text'
+        )
+        mockForConstraintsTests(Book, [existingBook])
+
+        def book = new Book()
+        assert book.validate() == false
+    }
+
     void testValidationTitle() {
         def book = new Book()
 
