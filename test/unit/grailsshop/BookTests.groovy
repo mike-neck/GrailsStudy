@@ -11,7 +11,7 @@ import org.junit.*
 @TestFor(Book)
 class BookTests {
 
-    def newBook = {
+    def existingBook = {
         return new Book(
                 title: 'test title',
                 author: 'mike',
@@ -23,36 +23,33 @@ class BookTests {
     }
 
     @Test
-    void useMockForConstraint() {
-        def existingBook = new Book(
-                title: 'test title',
-                author: 'mike',
-                price: 200,
-                releaseDate: new Date(),
-                isbn13: '1234567890123',
-                description: 'text'
-        )
-        mockForConstraintsTests(Book, [existingBook])
+    void validationNoAttributes() {
+        mockForConstraintsTests(Book, [existingBook()])
 
         def book = new Book()
         assert book.validate() == false
     }
 
-    void testValidationTitle() {
-        def book = new Book()
-
-        book.title = null
+    @Test
+    void validationTitle() {
+        mockForConstraintsTests(Book, [existingBook()])
         def object = 'title'
-        assert book.validate([object]) == false
 
-        book.title = ''
-        assert book.validate([object]) == false
+        def book = new Book()
+        assert book.validate() == false
+        assert book.errors[object] == 'nullable'
 
-        book.title = createTextToTheSize(200)
-        assert book.validate([object]) == true
+        book = new Book(title: '')
+        assert book.validate() == false
+        assert book.errors[object] == 'blank'
 
-        book.title = createTextToTheSize(201)
-        assert book.validate([object]) == false
+        book = new Book(title: createTextToTheSize(200))
+        assert book.validate() == false
+        assert book.errors[object] == null
+
+        book = new Book(title: createTextToTheSize(201))
+        assert book.validate() == false
+        assert book.errors[object] == 'maxSize'
     }
 
     void testValidationAuthor() {
