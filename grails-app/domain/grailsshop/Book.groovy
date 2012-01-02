@@ -51,6 +51,7 @@ class Book {
         price(min: 0)
         releaseDate(nullable: true)
         isbn13(blank: false, matches: "\\p{Digit}{13}", unique: true)
+        imageUrl(nullable: true)
     }
 
     static mapping = {

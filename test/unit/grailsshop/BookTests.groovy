@@ -143,11 +143,12 @@ class BookTests {
 
     @Test
     void validateImageUrl() {
-        def book = new Book()
-        
-        book.imageUrl = null
+        mockForConstraintsTests(Book, [existingBook()])
         def object = 'imageUrl'
-        assert book.validate([object]) == false
+
+        def book = new Book()
+        assert book.validate() == false
+        assert book.errors[object] == null
     }
 
     def createTextToTheSize = {int size ->
