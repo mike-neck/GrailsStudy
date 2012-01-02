@@ -53,23 +53,29 @@ class BookTests {
     }
 
     void testValidationAuthor() {
-        def book = new Book()
-
-        book.author = null
+        mockForConstraintsTests(Book, [existingBook()])
         def object = 'author'
-        assert book.validate([object]) == false
 
-        book.author = ''
-        assert book.validate([object]) == false
+        def book = new Book()
+        book.author = null
+        assert book.validate() == false
+        assert book.errors[object] == 'nullable'
 
-        book.author = createTextToTheSize(1)
-        assert book.validate([object]) == true
+        book = new Book(author: '')
+        assert book.validate() == false
+        assert book.errors[object] == 'blank'
 
-        book.author = createTextToTheSize(255)
-        assert book.validate([object]) == true
+        book = new Book(author: createTextToTheSize(1))
+        assert book.validate() == false
+        assert book.errors[object] == null
 
-        book.author = createTextToTheSize(256)
-        assert book.validate([object]) == false
+        book = new Book(author: createTextToTheSize(255))
+        assert book.validate() == false
+        assert book.errors[object] == null
+
+        book = new Book(author: createTextToTheSize(256))
+        assert book.validate() == false
+        assert book.errors[object] == 'maxSize'
     }
 
     void testValidationPrice() {
