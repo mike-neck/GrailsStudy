@@ -13,15 +13,16 @@ class PublisherTests {
 
     void testValidation() {
         def publisher = new Publisher()
-        println publisher
+        def objects = []
+        objects << 'name'
 
         publisher.name = null
-        assert publisher.validate() == false
+        assert publisher.validate(objects) == false
 
         publisher.name = ''
-        assert publisher.validate() == false
+        assert publisher.validate(objects) == false
 
         publisher.name = 'オライリー'
-        assert publisher.validate() == true
+        assert publisher.validate(objects) == true
     }
 }
