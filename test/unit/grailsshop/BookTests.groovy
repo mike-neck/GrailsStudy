@@ -31,7 +31,7 @@ class BookTests {
     }
 
     @Test
-    void validationTitle() {
+    void validateTitle() {
         mockForConstraintsTests(Book, [existingBook()])
         def object = 'title'
 
@@ -52,7 +52,8 @@ class BookTests {
         assert book.errors[object] == 'maxSize'
     }
 
-    void testValidationAuthor() {
+    @Test
+    void validateAuthor() {
         mockForConstraintsTests(Book, [existingBook()])
         def object = 'author'
 
@@ -78,7 +79,8 @@ class BookTests {
         assert book.errors[object] == 'maxSize'
     }
 
-    void testValidationPrice() {
+    @Test
+    void validatePrice() {
         mockForConstraintsTests(Book, [existingBook()])
         def object = 'price'
 
@@ -95,7 +97,8 @@ class BookTests {
         assert book.errors[object] == null
     }
 
-    void testValidationReleaseDate() {
+    @Test
+    void validateReleaseDate() {
         def book = new Book()
         
         book.releaseDate = null
@@ -103,7 +106,8 @@ class BookTests {
         assert book.validate([object]) == true
     }
 
-    void testValidationIsbn13() {
+    @Test
+    void validateIsbn13() {
         def book = new Book()
         
         book.isbn13 = null
@@ -127,7 +131,7 @@ class BookTests {
     }
 
     @Test
-    void validationImageUrl() {
+    void validateImageUrl() {
         def book = new Book()
         
         book.imageUrl = null
