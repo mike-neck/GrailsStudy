@@ -149,6 +149,14 @@ class BookTests {
         def book = new Book()
         assert book.validate() == false
         assert book.errors[object] == null
+
+        book = new Book(imageUrl: createTextToTheSize(5))
+        assert book.validate() == false
+        assert book.errors[object] == 'url'
+
+        book = new Book(imageUrl: 'http://server.jp/images/image.png')
+        assert book.validate() == false
+        assert book.errors[object] == null
     }
 
     def createTextToTheSize = {int size ->
