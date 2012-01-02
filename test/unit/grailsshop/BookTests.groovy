@@ -79,17 +79,20 @@ class BookTests {
     }
 
     void testValidationPrice() {
-        def book = new Book()
-        
-        book.price = -1
+        mockForConstraintsTests(Book, [existingBook()])
         def object = 'price'
-        assert book.validate([object]) == false
 
-        book.price = 0
-        assert book.validate([object]) == true
+        def book = new Book(price: -1)
+        assert book.validate() == false
+        assert book.errors[object] == 'min'
 
-        book.price = 1200
-        assert book.validate([object]) == true
+        book = new Book(price: 0)
+        assert book.validate() == false
+        assert book.errors[object] == null
+
+        book = new Book(price: 1200)
+        assert book.validate() == false
+        assert book.errors[object] == null
     }
 
     void testValidationReleaseDate() {
