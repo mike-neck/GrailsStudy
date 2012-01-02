@@ -44,6 +44,10 @@ class PublisherTests {
         publisher.addToBooks(book).save()
 
         assert Publisher.count() == 1
+
+        publisher.delete()
+
+        assert Publisher.count() == 0
     }
 
     Date createReleaseDate(int year, int month, int date) {
