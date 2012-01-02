@@ -13,7 +13,7 @@ class Publisher {
     static hasMany = [books: Book]
 
     static constraints = {
-        name(blank: false)
+        name(blank: false, unique: true)
         books(minSize: 0)
     }
 }
