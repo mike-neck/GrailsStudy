@@ -25,4 +25,11 @@ class PublisherTests {
         publisher.name = 'オライリー'
         assert publisher.validate(objects) == true
     }
+
+    @Test
+    void persistence() {
+        assert Publisher.count() == 0
+        assert Book.getCount() == 0
+    }
+
 }
