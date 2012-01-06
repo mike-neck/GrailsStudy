@@ -11,6 +11,23 @@ import org.junit.*
 @TestFor(OrderDetail)
 class OrderDetailTests {
 
-    void testSomething() {
+    @Ignore
+    @Test
+    void validateQuantity() {
+        def orderDetail = new OrderDetail()
+        def object = 'quantity'
+
+        assert orderDetail.validate() == false
+        assert orderDetail.errors[object] == 'min'
     }
+
+    @Test
+    void successCase() {
+        def order = new Order(date: new Date())
+        def book = new Book()
+        def orderDetail = new OrderDetail(order: order, book: book, quantity: 1)
+
+        assert orderDetail.validate() == true
+    }
+    
 }

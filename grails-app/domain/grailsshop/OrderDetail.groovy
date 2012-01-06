@@ -3,14 +3,10 @@ package grailsshop
 class OrderDetail {
 
     /**
-     * 購入モデル.
-     */
-    static belongsTo = [order : Order]
-
-    /**
+     * 注文.
      * 購入書籍.
      */
-    Book book
+    static belongsTo = [order : Order, book : Book]
 
     /**
      * 購入数量.
