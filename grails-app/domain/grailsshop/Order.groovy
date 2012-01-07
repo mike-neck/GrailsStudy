@@ -2,6 +2,8 @@ package grailsshop
 
 class Order {
 
+    Customer customer
+
     /**
      * 受注日.
      */
@@ -13,6 +15,7 @@ class Order {
     static hasMany = [orderDetails: OrderDetail]
 
     static constraints = {
+        customer()
         date(nullable: false, max: new Date())
         orderDetails(minSize: 1)
     }

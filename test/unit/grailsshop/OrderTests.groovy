@@ -36,8 +36,18 @@ class OrderTests {
         assert order.errors[object] == 'max'
 
         order = new Order(date: yesterday())
-        assert order.validate() == true
+        assert order.validate() == false
         assert order.errors[object] == null
+    }
+
+    @Test
+    void validateCustomer() {
+        mockForConstraintsTests(Order)
+        def object = 'customer'
+
+        def order = new Order()
+        assert order.validate() == false
+        assert order.errors[object] == 'nullable'
     }
 
     def tomorrow = {
