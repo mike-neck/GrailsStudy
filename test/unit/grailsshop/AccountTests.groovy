@@ -40,4 +40,18 @@ class AccountTests {
         account.validate()
         assert account.errors[object] == null
     }
+
+    @Test
+    void validatePassword() {
+        mockForConstraintsTests(Account)
+        def object = 'password'
+
+        def account = new Account()
+        assert account.validate() == false
+        assert account.errors[object] == 'nullable'
+
+        account = new Account(password: '')
+        assert account.validate() == false
+        assert account.errors[object] == 'blank'
+    }
 }
