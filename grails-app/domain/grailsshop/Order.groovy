@@ -10,11 +10,11 @@ class Order {
     /**
      * 受注詳細.
      */
-    static hasMany = [orderDetail : OrderDetail]
+    static hasMany = [orderDetails: OrderDetail]
 
     static constraints = {
         date(nullable: false, max: new Date())
-        orderDetail(minSize: 1)
+        orderDetails(minSize: 1)
     }
 
     static mapping = {

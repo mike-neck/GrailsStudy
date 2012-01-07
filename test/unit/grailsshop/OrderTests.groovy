@@ -11,6 +11,44 @@ import org.junit.*
 @TestFor(Order)
 class OrderTests {
 
-    void testSomething() {
+    @Ignore
+    @Test
+    void validateDetails() {
+        mockForConstraintsTests(Order)
+        def object = 'orderDetails'
+        def order = new Order()
+
+        assert order.validate() == false
+        assert order.errors[object] == 'nullable'
+    }
+
+    @Test
+    void validateDate() {
+        mockForConstraintsTests(Order)
+        def object = 'date'
+
+        def order = new Order()
+        assert order.validate() == false
+        assert order.errors[object] == 'nullable'
+
+        order = new Order(date: tomorrow())
+        assert order.validate() == false
+        assert order.errors[object] == 'max'
+
+        order = new Order(date: yesterday())
+        assert order.validate() == true
+        assert order.errors[object] == null
+    }
+
+    def tomorrow = {
+        def cal = Calendar.getInstance(TimeZone.getTimeZone('Asia/Tokyo'))
+        cal.add(Calendar.DATE, 1)
+        return cal.getTime()
+    }
+
+    def yesterday = {
+        def cal = Calendar.getInstance(TimeZone.getTimeZone('Asia/Tokyo'))
+        cal.add(Calendar.DATE, -1)
+        return cal.getTime()
     }
 }
