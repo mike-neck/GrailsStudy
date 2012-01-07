@@ -43,6 +43,10 @@ class OrderDetailTests {
         def orderDetail = new OrderDetail(order: order, quantity: 1)
         assert orderDetail.validate() == false
         assert orderDetail.errors[object] == 'nullable'
+
+        orderDetail = new OrderDetail(book: book)
+        assert orderDetail.validate() == false
+        assert orderDetail.errors[object] == null
     }
 
     @Test
