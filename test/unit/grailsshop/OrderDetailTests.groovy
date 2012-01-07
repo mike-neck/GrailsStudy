@@ -11,11 +11,19 @@ import org.junit.*
 @TestFor(OrderDetail)
 class OrderDetailTests {
 
+    Order order
+
+    Book book
+
+    @Before
+    void setUp() {
+        order = new Order(date: new Date(2012, 1, 1))
+        book = new Book()
+    }
+
     @Test
     void validateQuantity() {
         mockForConstraintsTests(OrderDetail)
-        def order = new Order(date: new Date())
-        def book = new Book()
         def object = 'quantity'
 
         def orderDetail = new OrderDetail(order: order, book: book, quantity: 0)
@@ -24,10 +32,18 @@ class OrderDetailTests {
     }
 
     @Test
+    void validateRelation () {
+        mockForConstraintsTests(OrderDetail)
+        def object = 'book'
+
+        def orderDetail = new OrderDetail(order: order, quantity: 1)
+        assert orderDetail.validate() == false
+        assert orderDetail.errors[object] == 'nullable'
+    }
+
+    @Test
     void successCase() {
         mockForConstraintsTests(OrderDetail)
-        def order = new Order(date: new Date())
-        def book = new Book()
         def orderDetail = new OrderDetail(order: order, book: book, quantity: 1)
 
         assert orderDetail.validate() == true

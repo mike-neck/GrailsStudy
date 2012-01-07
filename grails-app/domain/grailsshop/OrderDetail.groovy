@@ -14,7 +14,6 @@ class OrderDetail {
     int quantity
 
     static constraints = {
-        book(nullable: false)
         quantity(min: 1)
     }
 }
