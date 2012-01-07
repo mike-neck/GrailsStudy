@@ -12,6 +12,5 @@ import org.junit.*
 class WarehouseTests {
 
     void testSomething() {
-       fail "Implement me"
     }
 }
