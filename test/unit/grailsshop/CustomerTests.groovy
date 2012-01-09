@@ -38,4 +38,34 @@ class CustomerTests {
         assert customer.validate() == false
         assert customer.errors[object] == 'blank'
     }
+
+    @Test
+    void validatePhoneNumber() {
+        mockForConstraintsTests(Customer)
+        def object = 'phoneNumber'
+
+        def customer = new Customer()
+        assert customer.validate() == false
+        assert customer.errors[object] == 'nullable'
+
+        customer = new Customer(phoneNumber: '')
+        assert customer.validate() == false
+        assert customer.errors[object] == 'blank'
+
+        customer = new Customer(phoneNumber: 'abcjhkdjs')
+        assert customer.validate() == false
+        assert customer.errors[object] == 'matches'
+
+        customer = new Customer(phoneNumber: '0')
+        assert customer.validate() == false
+        assert customer.errors[object] == 'matches'
+
+        customer = new Customer(phoneNumber: '-0-1')
+        assert customer.validate() == false
+        assert customer.errors[object] == 'matches'
+
+        customer = new Customer(phoneNumber: '0-0')
+        assert customer.validate() == false
+        assert customer.errors[object] == null
+    }
 }
