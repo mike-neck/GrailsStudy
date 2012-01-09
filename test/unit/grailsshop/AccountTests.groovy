@@ -54,4 +54,14 @@ class AccountTests {
         assert account.validate() == false
         assert account.errors[object] == 'blank'
     }
+
+    @Test
+    void validateUniqueUser() {
+        mockForConstraintsTests(Account, [new Account(name: 'test-user', password: 'abcdefkees')])
+        def object = 'name'
+
+        def account = new Account(name: 'test-user', password: 'a123245sdfkjl')
+        assert account.validate() == false
+        assert account.errors[object] == 'unique'
+    }
 }

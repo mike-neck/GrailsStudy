@@ -14,7 +14,7 @@ class Account {
     String password
 
     static constraints = {
-        name(blank: false, minSize: 6, matches: /^[a-zA-Z]([a-zA-Z0-9-_]+)/)
+        name(blank: false, minSize: 6, matches: /^[a-zA-Z]([a-zA-Z0-9-_]+)/, unique: true)
         password(blank: false)
     }
 }
