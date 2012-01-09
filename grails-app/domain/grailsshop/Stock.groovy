@@ -13,5 +13,6 @@ class Stock {
     int quantity
 
     static constraints = {
+        quantity(min: 0)
     }
 }

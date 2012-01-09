@@ -25,4 +25,18 @@ class StockTests {
         stock.validate()
         assert stock.errors[object] == null
     }
+
+    @Test
+    void validateQuantity() {
+        mockForConstraintsTests(Stock)
+        def object = 'quantity'
+
+        def stock = new Stock(quantity: -1)
+        assert stock.validate() == false
+        assert stock.errors[object] == 'min'
+
+        stock = new Stock(quantity: 0)
+        stock.validate()
+        assert stock.errors[object] == null
+    }
 }
