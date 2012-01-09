@@ -72,4 +72,42 @@ class CustomerTests {
         assert customer.validate() == false
         assert customer.errors[object] == null
     }
+
+    @Test
+    void validateEMail() {
+        mockForConstraintsTests(Customer)
+        def object = 'eMail'
+
+        def customer = new Customer()
+        assert customer.validate() == false
+        assert customer.errors[object] == 'nullable'
+
+        customer = new Customer(eMail: '')
+        assert customer.validate() == false
+        assert customer.errors[object] == 'blank'
+
+        customer = new Customer(eMail: 'abc')
+        assert customer.validate() == false
+        assert customer.errors[object] == 'matches'
+
+        customer = new Customer(eMail: '1b@a.c')
+        assert customer.validate() == false
+        assert customer.errors[object] == 'matches'
+
+        customer = new Customer(eMail: 'ab1@a.x')
+        assert customer.validate() == false
+        assert customer.errors[object] == 'matches'
+
+        customer = new Customer(eMail: 'a-b@1a.x')
+        assert customer.validate() == false
+        assert customer.errors[object] == 'matches'
+
+        customer = new Customer(eMail: 'a-b.c@a.1')
+        assert customer.validate() == false
+        assert customer.errors[object] == 'matches'
+
+        customer = new Customer(eMail: 'a-b.c_d@a.1.e')
+        assert customer.validate() == false
+        assert customer.errors[object] == null
+    }
 }
