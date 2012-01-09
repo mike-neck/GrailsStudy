@@ -64,6 +64,10 @@ class CustomerTests {
         assert customer.validate() == false
         assert customer.errors[object] == 'matches'
 
+        customer = new Customer(phoneNumber: '00-000-')
+        assert customer.validate() == false
+        assert customer.errors[object] == 'matches'
+
         customer = new Customer(phoneNumber: '0-0')
         assert customer.validate() == false
         assert customer.errors[object] == null
