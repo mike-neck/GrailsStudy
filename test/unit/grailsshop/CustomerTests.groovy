@@ -24,4 +24,18 @@ class CustomerTests {
         assert customer.validate() == false
         assert customer.errors[object] == 'blank'
     }
+
+    @Test
+    void validateAddress() {
+        mockForConstraintsTests(Customer)
+        def object = 'address'
+
+        def customer = new Customer()
+        assert customer.validate() == false
+        assert customer.errors[object] == 'nullable'
+
+        customer = new Customer(address: '')
+        assert customer.validate() == false
+        assert customer.errors[object] == 'blank'
+    }
 }
