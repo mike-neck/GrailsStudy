@@ -110,4 +110,22 @@ class CustomerTests {
         assert customer.validate() == false
         assert customer.errors[object] == null
     }
+
+    @Test
+    void validatePaymentMethod() {
+        mockForConstraintsTests(Customer)
+        def object = 'paymentMethod'
+
+        def customer = new Customer()
+        assert customer.validate() == false
+        assert customer.errors[object] == 'nullable'
+
+        customer = new Customer(paymentMethod: '')
+        assert customer.validate() == false
+        assert customer.errors[object] == 'blank'
+
+        customer = new Customer(paymentMethod: 'card')
+        assert customer.validate() == false
+        assert customer.errors[object] == null
+    }
 }
