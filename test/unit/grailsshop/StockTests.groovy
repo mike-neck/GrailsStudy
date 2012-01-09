@@ -11,6 +11,18 @@ import org.junit.*
 @TestFor(Stock)
 class StockTests {
 
-    void testSomething() {
+    @Test
+    void validateBook() {
+        mockForConstraintsTests(Stock)
+        def object = 'book'
+
+        def stock = new Stock()
+        assert stock.validate() == false
+        assert stock.errors[object] == 'nullable'
+
+        def book = new Book()
+        stock = new Stock(book: book)
+        stock.validate()
+        assert stock.errors[object] == null
     }
 }
