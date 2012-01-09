@@ -11,6 +11,17 @@ import org.junit.*
 @TestFor(Customer)
 class CustomerTests {
 
-    void testSomething() {
+    @Test
+    void validateName() {
+        mockForConstraintsTests(Customer)
+        def object = 'name'
+
+        def customer = new Customer()
+        assert customer.validate() == false
+        assert customer.errors[object] == 'nullable'
+
+        customer = new Customer(name: '')
+        assert customer.validate() == false
+        assert customer.errors[object] == 'blank'
     }
 }
