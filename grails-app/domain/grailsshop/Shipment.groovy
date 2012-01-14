@@ -7,6 +7,13 @@ class Shipment {
      */
     Date date
 
+    static belongsTo = [
+            /**
+             * 発注.
+             */
+            order : Order
+    ]
+
     static constraints = {
         date(max: new Date())
     }

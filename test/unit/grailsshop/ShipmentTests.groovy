@@ -30,6 +30,16 @@ class ShipmentTests {
     }
 
     @Test
+    void validateOrder() {
+        mockForConstraintsTests(Shipment)
+        def object = 'order'
+
+        def shipment = new Shipment()
+        assert shipment.validate() == false
+        assert shipment.errors[object] == 'nullable'
+    }
+
+    @Test
     void testDate() {
         assert dayFromToday(0).compareTo(dayFromToday(1)) < 0
         assert dayFromToday(0).compareTo(dayFromToday(-1)) > 0
