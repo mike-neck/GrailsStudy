@@ -50,5 +50,7 @@ class WarehouseTests {
     @Test
     void validateStocks() {
         assert Warehouse.count() == 0
+        def warehouse = new Warehouse(address: 'アドレス', phoneNumber: '00-00-000')
+        assert warehouse.stocks == null
     }
 }
