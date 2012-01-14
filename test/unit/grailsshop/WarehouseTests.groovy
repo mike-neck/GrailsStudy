@@ -55,5 +55,13 @@ class WarehouseTests {
 
         def warehouse = new Warehouse(address: 'アドレス', phoneNumber: '00-00-000')
         assert warehouse.stocks == null
+
+        def stock = new Stock(quantity: 1)
+        warehouse.addToStocks(stock)
+        assert warehouse.stocks != null
+
+        warehouse.save()
+
+        assert Warehouse.count() == 1
     }
 }
