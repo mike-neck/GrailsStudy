@@ -11,7 +11,12 @@ class Shipment {
             /**
              * 発注.
              */
-            order : Order
+            order : Order,
+
+            /**
+             * 倉庫.
+             */
+            warehouse : Warehouse
     ]
 
     static constraints = {
