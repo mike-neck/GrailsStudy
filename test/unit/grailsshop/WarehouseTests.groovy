@@ -9,6 +9,7 @@ import org.junit.*
  * See the API for {@link grails.test.mixin.domain.DomainClassUnitTestMixin} for usage instructions
  */
 @TestFor(Warehouse)
+@Mock([Stock])
 class WarehouseTests {
 
     @Test
@@ -50,6 +51,8 @@ class WarehouseTests {
     @Test
     void validateStocks() {
         assert Warehouse.count() == 0
+        assert Stock.count() == 0
+
         def warehouse = new Warehouse(address: 'アドレス', phoneNumber: '00-00-000')
         assert warehouse.stocks == null
     }

@@ -12,6 +12,11 @@ class Warehouse {
      */
     String phoneNumber
 
+    /**
+     * 在庫.
+     */
+    static hasMany = [stocks : Stock]
+
     static constraints = {
         address(blank: false)
         phoneNumber(blank: false, matches: /^[0-9]+[0-9\-]+[0-9]+$/)
