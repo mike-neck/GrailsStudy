@@ -63,5 +63,16 @@ class WarehouseTests {
         warehouse.save()
 
         assert Warehouse.count() == 1
+        assert Stock.count() == 1
+
+        def newStock = new Stock(quantity: 2)
+        warehouse.addToStocks(newStock)
+
+        assert warehouse.stocks.size() == 2
+
+        warehouse.save()
+
+        assert Warehouse.count() == 1
+        assert Stock.count() == 2
     }
 }
