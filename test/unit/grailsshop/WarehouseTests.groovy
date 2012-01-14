@@ -74,5 +74,13 @@ class WarehouseTests {
 
         assert Warehouse.count() == 1
         assert Stock.count() == 2
+
+        warehouse.stocks.each {
+            it.delete()
+        }
+        warehouse.delete()
+
+        assert Warehouse.count() == 0
+        assert Stock.count() == 0
     }
 }
