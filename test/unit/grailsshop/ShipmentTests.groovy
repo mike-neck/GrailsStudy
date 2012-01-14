@@ -11,6 +11,41 @@ import org.junit.*
 @TestFor(Shipment)
 class ShipmentTests {
 
-    void testSomething() {
+    @Test
+    void validateDate() {
+        mockForConstraintsTests(Shipment)
+        def object = 'date'
+
+        def shipment = new Shipment()
+        assert shipment.validate() == false
+        assert shipment.errors[object] == 'nullable'
+
+        shipment = new Shipment(date: dayFromToday(1))
+        assert shipment.validate() == false
+        assert shipment.errors[object] == 'max'
+
+        shipment = new Shipment(date: dayFromToday(0))
+        shipment.validate()
+        assert shipment.errors[object] == null
+    }
+
+    @Test
+    void testDate() {
+        assert dayFromToday(0).compareTo(dayFromToday(1)) < 0
+        assert dayFromToday(0).compareTo(dayFromToday(-1)) > 0
+    }
+
+    def dayFromToday = {int d ->
+        def cal = Calendar.getInstance(TimeZone.getTimeZone('Asia/Tokyo'))
+        getDate(
+                cal.get(Calendar.YEAR),
+                cal.get(Calendar.MONTH),
+                cal.get(Calendar.DATE) + d)
+    }
+
+    def getDate = { int y, int m, int d ->
+        def cal = Calendar.getInstance(TimeZone.getTimeZone('Asia/Tokyo'))
+        cal.set(y, m, d, 0, 0)
+        cal.getTime()
     }
 }
