@@ -46,4 +46,9 @@ class WarehouseTests {
         warehouse.validate()
         assert warehouse.errors[object] == null
     }
+
+    @Test
+    void validateStocks() {
+        assert Warehouse.count() == 0
+    }
 }
